@@ -24,28 +24,17 @@ export class AppComponent {
   selectExcelFile(event: any) {
     this.selectedFile = event.target.files[0];
     this.fileName = this.selectedFile.name;
+    // load XML content to textarea with upload success event
+    let fileReader = new FileReader();
+    fileReader.readAsBinaryString(this.selectedFile);
+    fileReader.onload = (event: Event) => {
+      this.xmlText = fileReader.result;
+    };
     this.showSuccessOnUploadToastr();
   }
 
   excelToJsonConverter(xmlTextString: string) {
-    // check if selectedFile is available
-    if (this.selectedFile) {
-      let fileReader = new FileReader();
-      fileReader.readAsBinaryString(this.selectedFile);
-      fileReader.onload = (event: Event) => {
-        this.xmlData = fileReader.result;
-        this.jsonObject = fastXmlParser.parse(this.xmlData, {
-          ignoreAttributes: false,
-          attributeNamePrefix: "",
-        });
-        console.log("xmlToJson", this.jsonObject);
-        this.stringfyObject = JSON.stringify(this.jsonObject, null, 2);
-        this.postDataToAWSAPIGateway(this.stringfyObject);
-        this.showSuccessConversionToastr();
-      };
-    }
-    // check if text area is available
-    else if (xmlTextString) {
+    if (xmlTextString) {
       this.xmlData = xmlTextString;
       this.jsonObject = fastXmlParser.parse(this.xmlData, {
         ignoreAttributes: false,
@@ -92,7 +81,6 @@ export class AppComponent {
   showSuccessOnUploadToastr(){
     this.toastr.success('File is uploaded');
   }
-
 
   showErrorToastr(){
     this.toastr.error('Check XML input', 'Error');
