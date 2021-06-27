@@ -1,0 +1,5 @@
+<section *ngIf="stringfyObject" class="section">
+    <h1 class="title">JSON Format</h1>
+    <pre>{{ stringfyObject }}</pre>
+    <button class="button is-link" (click)="copyToClipboard(stringfyObject)">Copy to clipboard</button>
+</section>

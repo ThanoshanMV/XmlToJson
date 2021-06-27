@@ -1,0 +1,44 @@
+<section class="section">
+  <h1 class="title">XML Format</h1>
+  <h2 class="subtitle">
+    <strong>Attach</strong> XML file or <strong>paste</strong> XML in textarea
+    to convert. Refresh if the JSON format isn't updated :)
+  </h2>
+  <div class="column field">
+    <label class="label">XML input:</label>
+    <div class="control">
+      <textarea
+        [(ngModel)]="xmlText"
+        class="textarea is-primary is-medium"
+        placeholder="Paste XML text to convert"
+      ></textarea>
+    </div>
+  </div>
+  <div class="field is-grouped">
+    <div class="file is-primary control">
+      <label class="file-label">
+        <input
+          class="file-input"
+          type="file"
+          name="resume"
+          accept=".xml"
+          (change)="selectXmlFile($event)"
+        />
+        <span class="file-cta">
+          <span class="file-icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span class="file-label"> XML File </span>
+        </span>
+        <span class="file-name">
+          {{ fileName }}
+        </span>
+      </label>
+    </div>
+    <div class="control">
+      <button class="button is-link" (click)="parseXMLContent(xmlText)">
+        Convert
+      </button>
+    </div>
+  </div>
+</section>
